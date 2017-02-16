@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds" >
+    <!--日志前缀，路径-->
+    <property name="APP_LOG_PERFIX" value="/home/admin/logs/dexcnode/log"/>
+    <jmxConfigurator/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <timestamp key="byday" datePattern="yyyyMMdd"/>
+    <appender name="FILEAPPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${APP_LOG_PERFIX}-${byday}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${APP_LOG_PERFIX}.%i.log-${byday}.zip</fileNamePattern>
+            <maxHistory>3</maxHistory>
+            <minIndex>1</minIndex>
+            <maxIndex>5</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>500MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="cn.gov.bjsat" level="TRACE"/>
+
+    <root level="INFO">
+        <appender-ref ref="FILEAPPENDER"/>
+    </root>
+
+    <property name="HTTP-LOG-TIMING" value="0" scope="CONTEXT"/>
+    <property name="METHOD-LOG-TIMING" value="0" scope="CONTEXT"/>
+
+    <logger name="LOG_delCenter" level="TRACE" />
+    <logger name="LOG_invoiceCenterEJB" level="TRACE" />
+    <logger name="LOG_taxPayerCenter" level="TRACE" />
+    <logger name="LOG_payCenter" level="TRACE" />
+    <logger name="LOG_invoiceCenter" level="TRACE" />
+    <logger name="HTTP-LOG" level="TRACE" />
+    <logger name="HTTP-LOG" level="TRACE" />
+    <logger name="DATASOURCE-LOG" level="TRACE" />
+
+    <!--<appender name="async" class="ch.qos.logback.classic.AsyncAppender">-->
+        <!--&lt;!&ndash; 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 &ndash;&gt;-->
+        <!--<discardingThreshold>0</discardingThreshold>-->
+        <!--&lt;!&ndash; 更改默认的队列的条数,该值会影响性能.默认值为256 &ndash;&gt;-->
+        <!--<queueSize>5000</queueSize>-->
+        <!--<appender-ref ref="FILE"/>-->
+    <!--</appender>-->
+    <!--<logger name="HTTP-LOG" level="TRACE" additivity="false">
+        <appender-ref ref="async"/>
+    </logger>-->
+
+</configuration>

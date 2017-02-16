@@ -1,0 +1,29 @@
+{
+  "name": "material",
+  "version": "0.0.1",
+  "authors": [
+    "aliencode <grf110@163.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "2.1.4",
+    "angular": "1.4.6",
+    "angular-messages": "1.4.6",
+    "angular-resource": "1.4.6",
+    "angular-route": "1.4.6",
+    "font-awesome": "4.4.0",
+    "angular-material": "~0.11.4",
+    "pace":  "1.0.2"
+  }
+}

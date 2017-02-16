@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+        >
+    <!--切面功能-->
+    <aop:aspectj-autoproxy/>
+
+    <bean id="ruleCenter" class="cn.gov.bjsat.security.accesskey.OriginToken">
+        <property name="name" value="ruleCenter"/>
+        <property name="token" value="you_Tokenxxxxxxxx"/>
+        <property name="functionList">
+            <map>
+                <entry key="asyncCallMethod" value="true"/>
+            </map>
+        </property>
+        <property name="encryptKey">
+            <map>
+                <entry  key="op1" value="xxxx"/>
+                <entry  key="op2" value="xxxx"/>
+            </map>
+        </property>
+    </bean>
+    <!--每个渠道配一个BEAN-->
+    <!--<bean id="you_Center" class="cn.gov.bjsat.security.accesskey.OriginToken">-->
+        <!--<property name="name" value="you_Name"/>-->
+        <!--<property name="token" value="you_Token"/>-->
+        <!--<property name="functionList">-->
+            <!--<map>-->
+                <!--<entry key="fun1" value="true"/>-->
+                <!--<entry key="fun2" value="false"/>-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
+    <bean id="InitAccessUser" class="cn.gov.bjsat.security.accesskey.AccessUsers">
+        <property name="users">
+            <map>
+                <entry key="ruleCenter" value-ref="ruleCenter"/>
+                <!--<entry key="you_Center" value-ref="you_Center"/>-->
+             </map>
+        </property>
+    </bean>
+
+</beans>

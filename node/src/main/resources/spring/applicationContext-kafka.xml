@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd"
+       default-lazy-init="false"
+>
+
+    <bean class="cn.gov.bjsat.dexc.DexcConfig" id="dexcConfig">
+        <property name="zookeeperConnect" value="${dexcZookeeper}"/>
+        <property name="zookeeperSessionTimeoutms" value="60000"/>
+        <property name="zookeeperConnectionTimeoutms" value="6000"/>
+        <property name="rootPath" value="dataexchange"/>
+        <property name="appPath" value="/apps"/>
+        <property name="headPath" value="/head"/>
+        <property name="schedulerPath" value="/schedulers"/>
+        <property name="lockedPostfix" value="_LOCKED_"/>
+        <property name="callbackTopicPostfix" value="_CB"/>
+        <property name="topicReplications" value="2"/>
+        <!--数据回调默认处理逻辑核心，比如hsf-->
+        <property name="callbackRunnerCln" value="cn.gov.bjsat.dexc.ResultCallbackRunner"/>
+        <!--结点唯一标识，不指定会在每次启动时自动生成一个uuid-->
+        <!--指定后注意EDAS自动扩展后applicationUUID将会冲突-->
+        <!--<property name="applicationUUID" value="uuid"/>-->
+    </bean>
+    <bean class="cn.gov.bjsat.dexc.app.ZookeeperConnector" init-method="init" destroy-method="destroy"
+          id="zookeeperConnector"/>
+    <bean class="cn.gov.bjsat.dexc.app.AppInstanceManager" id="appInstanceManager"/>
+    <bean class="com.fasterxml.jackson.databind.ObjectMapper" id="objectMapper"/>
+
+    <!-- kafka producer -->
+    <bean id="producer" class="kafka.javaapi.producer.Producer">
+        <constructor-arg ref="producerConfig"/>
+    </bean>
+    <bean id="producerConfig" class="kafka.producer.ProducerConfig">
+        <!--参考：http://kafka.apache.org/documentation.html#producerconfigs-->
+        <constructor-arg type="java.util.Properties">
+            <props>
+                <prop key="metadata.broker.list">${kafka}</prop>
+                <prop key="serializer.class">kafka.serializer.StringEncoder</prop>
+                <prop key="request.required.acks">1</prop>
+                <prop key="producer.type">sync</prop>
+                <prop key="message.send.max.retries">3</prop>
+                <!--存储分区分配策略，默认是对key取模-->
+                <prop key="partitioner.class">kafka.producer.DefaultPartitioner</prop>
+            </props>
+        </constructor-arg>
+    </bean>
+
+
+    <!-- kafka consumer -->
+    <bean id="taskExecutor"
+          class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor" >
+        <!--最多-->
+        <property name="corePoolSize" value="300"/>
+        <!--线程池中的线程一旦添加就会被一直挂住，不能存在等待中的线程，一直不会被处理-->
+        <property name="maxPoolSize" value="300"/>
+        <!--不需要线程缓存-->
+        <property name="queueCapacity" value="0"/>
+    </bean>
+
+    <!--参考：http://kafka.apache.org/documentation.html#consumerconfigs-->
+    <bean class="cn.gov.bjsat.dexc.kafka.ConsumerConfig4Spring" id="consumerConfig4Spring">
+        <property name="props">
+            <props value-type="java.util.Properties">
+                <prop key="zookeeper.connect">${kafkaZK}</prop>
+                <prop key="zookeeper.session.timeout.ms">60000</prop>
+                <prop key="zookeeper.sync.time.ms">4000</prop>
+                <prop key="zookeeper.connection.timeout.ms">6000</prop>
+                <!--consumer定期commit offset-->
+                <prop key="auto.commit.interval.ms">10000</prop>
+                <!--
+                consumer第一次启动时候，在zookeeper中没有初始的offset将从哪里开始读取
+                smallest重新0开始读取
+                largest从logfile的offset读取
+                -->
+                <prop key="auto.offset.reset">smallest</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <bean class="cn.gov.bjsat.dexc.service.NodeApplicationListener"/>
+
+
+    <!--pandora-dev，EDAS开发模式，启动pandora和注册服务-->
+    <beans profile="pandora-dev">
+        <bean class="cn.gov.bjsat.dexc.PandoraDev" init-method="init" id="pandoraDev"/>
+    </beans>
+
+
+</beans>

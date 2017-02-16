@@ -1,0 +1,176 @@
+<html lang="en" ng-app="DexcApp">
+<head>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/pace/themes/white/pace-theme-flash.css">
+    <link rel="stylesheet" href="dist/css/fix.css">
+    <meta name="viewport" content="initial-scale=1"/>
+    <style type="text/css">
+        /**
+         * Hide when Angular is not yet loaded and initialized
+         */
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+</head>
+
+
+<body layout="column" ng-controller="MainCtrl">
+
+<md-toolbar layout="row" class="top_nav" ng-cloak>
+    <div class="md-toolbar-tools">
+        <div flex="none">
+            <h1>
+                <i class="fa fa-cubes"></i>
+                <span><a href="/#/">数据交换中心 - 综合管理系统</a></span>
+            </h1>
+        </div>
+        <div flex flex-offset="5">
+            <md-button ng-click="gotoUrl('/#nodes')">
+                <i class="fa fa-dashboard"></i> 集群节点管理
+                <md-tooltip>
+                    数据回调消息和发送处理结点状态
+                </md-tooltip>
+            </md-button>
+            <!--<md-button ng-click="gotoUrl('/#/')">-->
+            <!--<i class="fa fa-dashboard"></i> 控制台-->
+            <!--<md-tooltip>-->
+            <!--综合信息-->
+            <!--</md-tooltip>-->
+            <!--</md-button>-->
+            <md-button ng-click="gotoUrl('/#apps')">
+                注册应用管理
+                <md-tooltip>
+                    管理已授权数据交换的应用
+                </md-tooltip>
+            </md-button>
+            <md-button ng-click="showRegWindow($event)">
+                注册应用
+                <md-tooltip>
+                    注册新的需要数据交换的应用
+                </md-tooltip>
+            </md-button>
+            <md-button ng-click="gotoUrl('/#schedulers')">
+                定时任务管理
+            </md-button>
+            <md-button ng-click="showSchedulerWindow($event)">
+                添加定时任务
+            </md-button>
+            <md-button ng-click="gotoUrl('http://kafka-ui:9000')">
+                消息中心
+                <md-tooltip>
+                    查看消息中心(KAFKA)管理UI
+                </md-tooltip>
+            </md-button>
+            <md-button ng-click="toggleSidenav('left')">
+                任务中心
+                <md-tooltip>
+                    查看任务调度/作业管理UI
+                </md-tooltip>
+            </md-button>
+        </div>
+        <div class="md-actions" layout="row" layout-align="end" flex="2">
+            <md-fab-speed-dial md-direction="left" class="md-fling">
+                <md-fab-trigger>
+                    <md-button aria-label="menu" class="md-fab md-hue-3 md-accent md-mini">
+                        <i class="fa fa-user"></i>
+                        <md-tooltip>操作</md-tooltip>
+                    </md-button>
+                </md-fab-trigger>
+                <md-fab-actions>
+                    <md-button aria-label="Twitter" class="md-fab md-hue-3 md-accent md-raised md-mini">
+                        <i class="fa fa-bars"></i>
+                    </md-button>
+                    <md-button aria-label="Facebook" class="md-fab md-accent md-hue-3 md-raised md-mini">
+                        <i class="fa fa-bars"></i>
+                    </md-button>
+                </md-fab-actions>
+            </md-fab-speed-dial>
+        </div>
+    </div>
+</md-toolbar>
+
+<!--<div class="content-container" layout-padding md-scroll-y ng-cloak flex>-->
+<div class="content-container"  ng-cloak flex>
+    <!--使用sidenav-->
+    <div layout="row" flex>
+        <md-sidenav layout="column" ng-cloak class="left-navi md-sidenav-left md-whiteframe-z2" md-component-id="left"
+                    md-is-locked-open="$mdMedia('gt-sm')">
+            <md-subheader class="md-no-sticky">应用</md-subheader>
+            <md-list-item ng-click="navigateTo('data usage', $event)">
+                <md-icon><i class="fa fa-user"></i></md-icon>
+                <p>定时任务</p>
+            </md-list-item>
+            <md-list-item ng-click="navigateTo('data usage', $event)">
+                <md-icon><i class="fa fa-user"></i></md-icon>
+                <p>任务中心</p>
+                <md-tooltip>
+                    查看任务调度/作业管理UI
+                </md-tooltip>
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-subheader class="md-no-sticky">消息</md-subheader>
+            <md-list-item ng-click="navigateTo('data usage', $event)">
+                <md-icon><i class="fa fa-user"></i></md-icon>
+                <p>定时任务</p>
+            </md-list-item>
+            <md-list-item ng-click="navigateTo('data usage', $event)">
+                <md-icon><i class="fa fa-user"></i></md-icon>
+                <p>任务中心</p>
+                <md-tooltip>
+                    查看任务调度/作业管理UI
+                </md-tooltip>
+            </md-list-item>
+            <md-divider></md-divider>
+            <md-subheader class="md-no-sticky">任务</md-subheader>
+            <md-list-item ng-click="navigateTo('data usage', $event)">
+                <md-icon><i class="fa fa-user"></i></md-icon>
+                <p>定时任务</p>
+            </md-list-item>
+            <md-list-item ng-click="navigateTo('data usage', $event)">
+                <md-icon><i class="fa fa-user"></i></md-icon>
+                <p>任务中心</p>
+                <md-tooltip>
+                    查看任务调度/作业管理UI
+                </md-tooltip>
+            </md-list-item>
+        </md-sidenav>
+        <div layout="column" flex id="content" ng-cloak>
+            <!--<md-content layout="column" flex class="md-padding">-->
+
+            <!--</md-content>-->
+            <md-content class="md-padding bg-none content-view fade-animation" layout="row" layout-wrap ng-view>
+            </md-content>
+        </div>
+    </div>
+    <!--<md-content class="md-padding bg-none content-view fade-animation" layout="row" layout-wrap ng-view>-->
+    <!--</md-content>-->
+</div>
+
+<!--测试开发阶段-->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-aria/angular-aria.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-material/angular-material.js"></script>
+<script src="bower_components/pace/pace.js"></script>
+
+<!--<script src="bower_components/jquery/dist/jquery.min.js"></script>-->
+<!--<script src="bower_components/angular/angular.min.js"></script>-->
+<!--<script src="bower_components/angular-animate/angular-animate.min.js"></script>-->
+<!--<script src="bower_components/angular-aria/angular-aria.min.js"></script>-->
+<!--<script src="bower_components/angular-messages/angular-messages.min.js"></script>-->
+<!--<script src="bower_components/angular-route/angular-route.min.js"></script>-->
+<!--<script src="bower_components/angular-resource/angular-resource.min.js"></script>-->
+<!--<script src="bower_components/angular-material/angular-material.min.js"></script>-->
+<!--<script src="bower_components/pace/pace.min.js"></script>-->
+
+
+<script src="app/services.js"></script>
+<script src="app/app.js"></script>
+</body>
+</html>

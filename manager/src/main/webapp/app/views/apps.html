@@ -1,0 +1,75 @@
+<md-whiteframe class="md-whiteframe-3dp flex-90" style="background: #fff;margin:10px auto">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>注册应用管理</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" type="button"  ng-click="gotoUrl('/#apps')">
+                <i class="fa fa-refresh"></i>
+                <md-tooltip>
+                    刷新列表
+                </md-tooltip>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <div  style=" overflow:auto;padding: 20px;max-height: 400px;">
+        <md-list>
+            <md-list-item class="animate-repeat" ng-repeat="item in items" style="margin-bottom: 10px;border-bottom: 1px solid #eeeeee">
+                <md-icon style="margin-right: 10px"><i class="fa fa-ellipsis-v" style="font-size: 18px;margin-top: 3px;"></i></md-icon>
+                <p>{{ item.appNameCn }} (appId: {{ item.appId }})</p>
+                <!--<p>{{ item.appName }}, {{ item.appNameCn }}, {{ item.topicName }}, {{ item.streamCount }}, {{ item.callbackRoute }}</p>-->
+                <div class="md-actions" layout="row" layout-align="end center">
+                    <md-button class="md-primary"  ng-click="menuClick(0, item.appId)"><i class="fa fa-info-circle"></i> 详细信息
+                    </md-button>
+                    <md-button class="md-primary"  ng-click="menuClick(1, item.appId)"><i class="fa fa-edit"></i> 修改
+                    </md-button>
+                    <md-button class=""  ng-click="menuClick(2, item.appId, $event)"><i class="fa fa-share"></i> 发送任务数据
+                        <md-tooltip>
+                            发送正向数据，模拟测试任务提交
+                        </md-tooltip>
+                    </md-button>
+                    <md-button class=""  ng-click="menuClick(3, item.appId, $event)"><i class="fa fa-reply"></i> 发送回调数据
+                        <md-tooltip>
+                            发送反向回调数据，模拟任务处理结果数据回调
+                        </md-tooltip>
+                    </md-button>
+                    <md-button class="md-primary"  ng-click="menuClick(4, item.appId, $event)"><i class="fa fa-info-circle"></i> 处理结点查看
+                        <md-tooltip>
+                            查看负责此应用数据处理的集群结点
+                        </md-tooltip>
+                    </md-button>
+                    <md-button class="md-warn"  ng-click="menuClick(5, item.appId, $event)"><i class="fa fa-trash"></i> 删除应用
+                        <md-tooltip>
+                            删除已注册的应用, 相关Topic将自动删除！
+                        </md-tooltip>
+                    </md-button>
+                </div>
+            </md-list-item>
+        </md-list>
+    </div>
+</md-whiteframe>
+
+
+<!--<md-card>-->
+<!--<md-toolbar class="md-default-theme">-->
+<!--<div class="md-toolbar-tools">-->
+<!--<h2>注册一个取数应用</h2>-->
+<!--<span class="flex"></span>-->
+<!--<button class="md-icon-button md-button md-default-theme"  type="button"  >-->
+<!--<i class="fa fa-close ng-scope"></i>-->
+<!--</button>-->
+<!--</div>-->
+<!--</md-toolbar>-->
+<!--<md-card-content style="padding: 0">-->
+<!--<md-list>-->
+<!--<md-list-item class="md-3-line" ng-repeat="item in [1,2,3,4]" ng-click="gotoUrl('/')">-->
+<!--<md-icon><i class="fa fa-user"></i></md-icon>-->
+<!--<div class="md-list-item-text" layout="column">-->
+<!--<h3>{{ item }}</h3>-->
+<!--<h4>{{ item }}</h4>-->
+<!--<p>{{ item }}</p>-->
+<!--</div>-->
+<!--</md-list-item>-->
+
+<!--</md-list>-->
+<!--</md-card-content>-->
+<!--</md-card>-->

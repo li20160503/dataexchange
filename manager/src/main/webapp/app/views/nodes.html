@@ -1,0 +1,35 @@
+<md-card style="width: 420px;height: 380px;" ng-repeat="item in nodes" class="animate-repeat">
+    <md-card-content style="line-height: 2">
+        <h2  class="md-title" style="color: grey">结点 {{$index+1}}  ({{item.key}})</h2>
+        <div  style="line-height: 2">
+            <div>IP地址: {{item.value.split('||')[1]}}</div>
+            <div>主机名: {{item.value.split('||')[0]}}</div>
+            <div>启动时间: {{item.value.split('||')[3]}}</div>
+            <div>物理路径: {{item.value.split('||')[2]}}</div>
+            <div style="color: grey">ID: {{item.key}}</div>
+        </div>
+    </md-card-content>
+    <div layout="row" layout-align="end center">
+
+        <md-menu>
+            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                <i class="fa fa-bars"></i>
+                <md-tooltip>
+                    相关操作
+                </md-tooltip>
+            </md-button>
+            <md-menu-content width="4">
+                <md-menu-item ng-repeat="menu in ['线程信息','作业信息']">
+                    <md-button ng-click="menuClick($index, item.key)">
+                        <div layout="row">
+                            <md-icon md-menu-align-target style="margin: 10px 0 auto 0;">
+                                <i class="fa fa-ellipsis-v"></i>
+                            </md-icon>
+                            <p flex>{{menu}}</p>
+                        </div>
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+</md-card>

@@ -1,0 +1,68 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>注册应用详细信息查看 </h2>
+                <span flex></span>
+                <md-button class="md-icon-button" type="button" ng-click="cancel()">
+                    <i class="fa fa-close"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="width:700px;max-height:810px; " layout-padding>
+            <md-list >
+                <md-list-item>
+                    <p>应用ID：{{app.appId}} </p>
+                </md-list-item>
+                <md-list-item>
+                    <p>应用Key：{{app.appKey}} </p>
+                </md-list-item>
+                <md-list-item>
+                    <p>应用名称：{{app.appNameCn}} </p>
+                </md-list-item>
+                <md-list-item>
+                    <p>应用标识：{{app.appName}} </p>
+                </md-list-item>
+                <md-list-item>
+                    <p>消息Topic名称：{{app.topicName}} </p>
+                </md-list-item>
+                <md-list-item>
+                    <p>回调消息Topic名称：{{app.topicCBName}} </p>
+                </md-list-item>
+                <md-list-item>
+                    <p>回调接口HSF组名：{{app.callbackHsfGroupname}} </p>
+                </md-list-item>
+                <md-list-item>
+                    <p>回调接口HSF版本：{{app.callbackHsfVersino}} </p>
+                </md-list-item>
+                <md-list-item>
+                    <p>授权Token：{{app.fromToken}} </p>
+                </md-list-item>
+                <md-list-item>
+                    <p>ChannelId：{{app.channelId}} </p>
+                </md-list-item>
+                <md-list-item>
+                    <p>消息分区数/处理线程数：{{app.partitions}} </p>
+                </md-list-item>
+                <md-list-item>
+                    <p>消息数据存放份数：{{app.streamCount}} </p>
+                </md-list-item>
+                <md-list-item>
+                    <p>注册时间：{{app.regDate}} </p>
+                </md-list-item>
+                <md-list-item>
+                    <p>消息处理逻辑：{{app.runnerClassName}} </p>
+                </md-list-item>
+            </md-list>
+        </md-dialog-content>
+        <div class="md-actions" layout="row">
+            <md-button ng-click="cancel()" class="md-raised md-warn" style="margin-right:20px;">
+                关闭
+            </md-button>
+        </div>
+    </form>
+</md-dialog>
+
+
+
+

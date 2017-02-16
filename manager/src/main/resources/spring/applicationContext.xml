@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd"
+        >
+
+    <description>SPRING公共配置</description>
+
+    <!-- 注册bean, Controller除外由mvc部分注册 -->
+    <context:component-scan base-package="cn.gov.bjsat">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!--多语言资源文件-->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>lang.applicationresource</value>
+                <value>lang.ValidationMessages</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--
+    ApplicationContext工具
+    例： ApplicationContextUtils.getBean("beanid")
+    -->
+    <bean id="applicationContextUtils" class="cn.bgonline.askit.module.base.spring.ApplicationContextUtils"
+          lazy-init="false"/>
+
+    <!-- JSR303 Validator定义， 支持Spring @Valid -->
+    <bean name="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+
+
+    <!--spring 配置中某些bean没有使用占位符，通过bean的id和属性名重新赋值，如：xxx.xxx=xxx，如果是Bean引用：xxx.xxx.bean_ref=xxx-->
+    <bean class="cn.bgonline.askit.module.base.spring.config.BeanRefPropertyOverrideConfigurer">
+        <property name="location" value="classpath:/properties/property-override.properties"/>
+        <property name="ignoreInvalidKeys" value="true"/>
+    </bean>
+
+    <context:property-placeholder location="classpath*:/properties/application.properties"/>
+
+
+
+</beans>

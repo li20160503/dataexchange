@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <name>dataexchange -- public</name>
+    
+    <artifactId>dataexchange-public</artifactId>
+    <packaging>jar</packaging>
+
+    <parent>
+        <version>1.6</version>
+        <groupId>cn.gov.bjsat.dexc</groupId>
+        <artifactId>dataexchange</artifactId>
+    </parent>
+
+
+    <!--仓库配置-->
+    <repositories>
+        <repository>
+            <id>zlsnet</id>
+            <url>http://119.253.44.136/data/public/maven/repository/</url>
+            <!--<url>http://zlhl-dev.github.io/askit/repository</url>-->
+        </repository>
+        <repository>
+            <id>oschina thirdparty Releases</id>
+            <name>oschina thirdparty Releases</name>
+            <url>http://maven.oschina.net/content/repositories/thirdparty/</url>
+        </repository>
+        <repository>
+            <id>oschina Releases</id>
+            <name>oschina Releases</name>
+            <url>http://maven.oschina.net/content/groups/public</url>
+        </repository>
+    </repositories>
+
+    <properties>
+        <askit.version>0.4.1</askit.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.gov.bjsat.dexc</groupId>
+            <artifactId>dataexchange-icallback</artifactId>
+            <version>1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.bgonline.askit.modules</groupId>
+            <artifactId>askit-base</artifactId>
+            <version>${askit.version}</version>
+            <exclusions>
+                <!--JDK6不支持-->
+                <exclusion>
+                    <groupId>javax.servlet</groupId>
+                    <artifactId>javax.servlet-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--<dependency>
+            <groupId>cn.bgonline.askit.modules</groupId>
+            <artifactId>askit-monitor</artifactId>
+            <version>${askit.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>cn.gov.bjsat.rules</groupId>
+            <artifactId>rule-api</artifactId>
+            <version>1.2.9-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>cn.bgonline.askit.modules</groupId>
+                    <artifactId>askit-jpa</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>cn.bgonline.askit.modules</groupId>
+                    <artifactId>askit-rest</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+        <groupId>cn.gov.bjsat.security</groupId>
+        <artifactId>edas-security</artifactId>
+        <version>0.0.8-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.taobao</groupId>
+            <artifactId>hsf</artifactId>
+            <version>2.1.1.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.taobao.hsf</groupId>
+            <artifactId>LightApi</artifactId>
+            <version>1.0.3-SNAPSHOT</version>
+        </dependency>
+
+
+
+        <!-- Quartz framework -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>2.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-test</artifactId>
+            <version>2.9.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.10</artifactId>
+            <version>0.8.2.1</version>
+        </dependency>
+
+
+    </dependencies>
+
+
+</project>

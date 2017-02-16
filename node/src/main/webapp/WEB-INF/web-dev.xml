@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app metadata-complete="false"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+    <!--
+     SPRING开发环境配置，参考README
+    -->
+    <context-param>
+        <param-name>spring.profiles.default</param-name>
+        <param-value>developmentH2db,cache-ehCache,shiro-local,monitor-datasource,monitor-http,dexc-node,pandora-dev</param-value>
+    </context-param>
+
+</web-app>

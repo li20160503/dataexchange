@@ -1,0 +1,62 @@
+<md-whiteframe class="md-whiteframe-3dp flex-90" style="background: #fff;margin:10px auto">
+    <md-toolbar class="md-accent md-hue-2">
+        <div class="md-toolbar-tools">
+            <h2>定时任务管理</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" type="button" ng-click="gotoUrl('/#schedulers')">
+                <i class="fa fa-refresh"></i>
+                <md-tooltip>
+                    刷新列表
+                </md-tooltip>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <div style="max-height: 400px; overflow:auto;padding: 20px;">
+        <md-list>
+
+            <md-list-item class="md-3-line animate-repeat" ng-repeat="item in items"
+                          style="margin-bottom: 10px;border-bottom: 1px solid #eeeeee">
+                <i class="fa fa-ellipsis-v md-avatar" style="font-size: 18px;"></i>
+
+                <div class="md-list-item-text" layout="column">
+                    <h3>{{ item.name }} <i style="color: rgba(0,0,0,0.54)">(id: {{ item.id }})</i></h3>
+                    <h4>
+                        <md-chips>
+                            <md-chip ng-click="menuClick(3, item.instanceId, $event)" style="cursor: pointer;">
+                                {{ item.instanceId }}
+                                <md-tooltip>
+                                    关联应用
+                                </md-tooltip>
+                            </md-chip>
+                            <md-chip>
+                                {{ item.cronexp }}
+                                <md-tooltip>
+                                    定时器
+                                </md-tooltip>
+                            </md-chip>
+                        </md-chips>
+                    </h4>
+                    <p>{{ item.content }}</p>
+                </div>
+                <div class="md-actions" layout="row" layout-align="end center">
+
+                    <md-button class="" ng-click="menuClick(0, item.id, $event)"><i class="fa fa-reply"></i> 执行
+                        <md-tooltip>
+                            手动执行一次调用
+                        </md-tooltip>
+                    </md-button>
+                    <md-button class="md-primary" ng-click="menuClick(1, item.id, $event)"><i
+                            class="fa fa-info-circle"></i>
+                        <span ng-if="item.status == 'PAUSED'">继续</span>
+                        <span ng-if="item.status == 'NORMAL'">暂停</span>
+                        <md-tooltip>
+                            状态不会被持久化，服务重新启动后全部被重置为默认状态！
+                        </md-tooltip>
+                    </md-button>
+                    <md-button class="md-warn" ng-click="menuClick(2, item.id, $event)"><i class="fa fa-trash"></i> 删除
+                    </md-button>
+                </div>
+            </md-list-item>
+        </md-list>
+    </div>
+</md-whiteframe>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>auikit-演示 登录</title>
+
+    <!--auikit相关-->
+    <link rel="stylesheet" href="assets/auikit/css/libs.min.css"/>
+    <link rel="stylesheet" href="assets/auikit/css/auikit.default.min.css" data-theme="auikit"/>
+    <script type="text/javascript" src="assets/auikit/js/libs.min.js"></script>
+    <script type="text/javascript" src="assets/auikit/js/auikit.min.js"></script>
+    <script type="text/javascript" src="assets/auikit/js/app.js"></script>
+
+    <!--项目本身相关-->
+    <script type="text/javascript" src="app/demo/controller/DemoCtrl.js"></script>
+
+    <style type="text/css">
+        input.form-control {
+            line-height: 2;
+            padding: 1.1em;
+        }
+    </style>
+</head>
+<body ng-controller="LoginCtrl">
+<div class="modal loginpanel"  tabindex="-1" role="dialog" aria-hidden="false" style="display: block;margin-top: 150px;" data-scroll-reveal='enter top'>
+    <div class="modal-dialog" style="width: 500px;">
+        <div class="modal-content ui-draggable">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel"><i class="fa fa-user"></i> 用户登录</h4>
+            </div>
+            <div class="modal-body ">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group  has-feedback uk-scrollspy-init-inview animated"
+                         data-scroll-reveal="enter from the bottom after .3s">
+
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="username" name="username" placeholder="登录账号："
+                                   required title="请输入 - 登录账号" autocomplete="off">
+                            <span class="fa fa-user form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <div class="form-group  has-feedback uk-scrollspy-init-inview animated"
+                         data-scroll-reveal="enter from the bottom after .5s">
+
+                        <div class="col-sm-12">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="登录密码："
+                                   required title="请输入 - 登录密码">
+                            <span class="fa fa-key form-control-feedback"></span>
+                        </div>
+                        <input type="hidden" value="0" name="validatecode"/>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary Bounce-Modal2" data-scroll-reveal="enter from the bottom after 1s" id="login-btn">
+                    确认登录
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

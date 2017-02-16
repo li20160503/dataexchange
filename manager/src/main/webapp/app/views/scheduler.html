@@ -1,0 +1,63 @@
+<md-dialog >
+    <form name="schedulerForm">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>添加定时任务</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" type="button" ng-click="cancel()">
+                    <i class="fa fa-close"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content style="width:760px;max-height:810px; " layout-padding>
+            <md-input-container>
+                <label>名称</label>
+                <input md-maxlength="10" required name="name" ng-model="scheduler.name">
+                <div ng-messages="schedulerForm.name.$error">
+                    <div ng-message="required">必填项</div>
+                    <div ng-message="md-maxlength">最多10个字符.</div>
+                </div>
+            </md-input-container>
+            <md-input-container>
+                <label>定时器</label>
+                <input md-maxlength="100" required name="cronexp" ng-model="scheduler.cronexp">
+                <div ng-messages="schedulerForm.cronexp.$error">
+                    <div ng-message="required">必填项</div>
+                    <div ng-message="md-maxlength">最多100个字符.</div>
+                </div>
+            </md-input-container>
+            <md-input-container>
+                <label>应用实例</label>
+                <md-select ng-model="scheduler.instanceId" required>
+                    <md-option  ng-repeat="item in apps" value="{{item.appId}}">{{item.appNameCn}}</md-option>
+                </md-select>
+            </md-input-container>
+            <!--<md-input-container>-->
+                <!--<label>状态</label>-->
+                <!--<md-select ng-model="scheduler.status">-->
+                    <!--<md-option  value="1">启用</md-option>-->
+                    <!--<md-option  value="0">禁用</md-option>-->
+                <!--</md-select>-->
+            <!--</md-input-container>-->
+            <md-input-container>
+                <label>消息内容</label>
+                <textarea rows="5" cols="20" required name="content" ng-model="scheduler.content" style="width: 100%;"></textarea>
+                <div ng-messages="schedulerForm.content.$error">
+                    <div ng-message="required">必填项</div>
+                </div>
+            </md-input-container>
+        </md-dialog-content>
+        <div class="md-actions" layout="row">
+            <md-button ng-click="cancel()" type="button">
+                取消关闭
+            </md-button>
+            <md-button ng-click="addScheduler()" class="md-raised md-warn" style="margin-right:20px;"   type="button">
+                确认注册
+            </md-button>
+        </div>
+    </form>
+</md-dialog>
+
+
+
+

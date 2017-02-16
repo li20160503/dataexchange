@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds" >
+    <!--日志前缀，路径-->
+    <property name="APP_LOG_PERFIX" value="logs/log"/>
+    <jmxConfigurator/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <timestamp key="byday" datePattern="yyyyMMdd"/>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${app.root}/${APP_LOG_PERFIX}-${byday}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${simpleapp.root}/${APP_LOG_PERFIX}.%i.log-${byday}.zip</fileNamePattern>
+            <maxHistory>90</maxHistory>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>5MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="cn.gov.bjsat" level="TRACE"/>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <property name="HTTP-LOG-TIMING" value="0" scope="CONTEXT"/>
+    <property name="METHOD-LOG-TIMING" value="0" scope="CONTEXT"/>
+
+    <logger name="HTTP-LOG" level="TRACE" />
+    <logger name="DATASOURCE-LOG" level="TRACE" />
+
+    <appender name="async" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的条数,该值会影响性能.默认值为256 -->
+        <queueSize>5000</queueSize>
+        <appender-ref ref="FILE"/>
+    </appender>
+    <!--<logger name="HTTP-LOG" level="TRACE" additivity="false">
+        <appender-ref ref="async"/>
+    </logger>-->
+
+</configuration>
