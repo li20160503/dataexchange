@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <version>1.6</version>
+        <groupId>cn.gov.bjsat.dexc</groupId>
+        <artifactId>dataexchange</artifactId>
+    </parent>
+
+    <name>dataexchange -- icallback</name>
+    <artifactId>dataexchange-icallback</artifactId>
+    <version>1.6</version>
+    <packaging>jar</packaging>
+
+    <build>
+        <plugins>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.6.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.6.2</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+</project>
