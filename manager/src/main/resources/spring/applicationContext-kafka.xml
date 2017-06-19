@@ -2,14 +2,16 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
-         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd"
+         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
        default-lazy-init="false"
 >
 
     <bean class="cn.gov.bjsat.dexc.DexcConfig" id="dexcConfig">
-        <property name="zookeeperConnect" value="kafkaZK001:2181,kafkaZK002:2181,kafkaZK003:2181"/>
+      <!--  <property name="zookeeperConnect" value="kafkaZK001:2181,kafkaZK002:2181,kafkaZK003:2181"/>-->
+        <property name="zookeeperConnect" value="zookeeper1:2181,zookeeper2:2181,zookeeper3:2181"/>
         <property name="zookeeperSessionTimeoutms" value="60000"/>
         <property name="zookeeperConnectionTimeoutms" value="6000"/>
         <property name="rootPath" value="dataexchange"/>
@@ -63,7 +65,7 @@
         <property name="maxPoolSize" value="51"/>
         <!--不需要线程缓存-->
         <property name="queueCapacity" value="0"/>
-        <property name="WaitForTasksToCompleteOnShutdown" value="false"/>
+  <!--      <property name="WaitForTasksToCompleteOnShutdown" value="false"/>-->
     </bean>
 
     <!--参考：http://kafka.apache.org/documentation.html#consumerconfigs-->
@@ -100,20 +102,26 @@
         <property name="producer" ref="producer4Instance"/>
         <property name="repository" ref="appInstanceRepository"/>
     </bean>
-    <beans profile="dexc-manager-pandora">
+    <dubbo:service interface="cn.gov.bjsat.dexc.hsf.callback.HsfDexcInterface" ref="dexcService" version="1.0.0"
+                   group="DEXCSERVICE" ></dubbo:service>
+    <dubbo:application name="dubbo-manager" />
+    <dubbo:protocol name="dubbo" port="20880"/>
+    <dubbo:registry address="zookeeper://zookeeper1:2181?backup=zookeeper2:2181,zookeeper3:2181" client="zkclient"/>
+
+  <!--  <beans profile="dexc-manager-pandora">
         <bean class="com.taobao.hsf.app.spring.util.HSFSpringProviderBean" init-method="init">
             <property name="serviceInterface" value="cn.gov.bjsat.dexc.hsf.callback.HsfDexcInterface"/>
             <property name="serviceVersion" value="1.0.0"/>
             <property name="serviceGroup" value="DEXCSERVICE"/>
             <property name="target" ref="dexcService"/>
         </bean>
-    </beans>
+    </beans>-->
 
 
     <!--pandora-dev，EDAS开发模式，启动pandora和注册服务-->
-    <beans profile="pandora-dev">
+   <!-- <beans profile="pandora-dev">
         <bean class="cn.gov.bjsat.dexc.PandoraDev" init-method="init" id="pandoraDev"/>
-    </beans>
+    </beans>-->
 
 
 </beans>

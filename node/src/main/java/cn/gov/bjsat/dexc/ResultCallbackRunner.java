@@ -1,17 +1,21 @@
 package cn.gov.bjsat.dexc;
 
 import cn.gov.bjsat.dexc.app.AppInstance;
-import cn.gov.bjsat.dexc.hsf.HSFSpringConsumerBeanFactory;
+
 import cn.gov.bjsat.dexc.hsf.callback.HsfInterface;
 import cn.gov.bjsat.dexc.hsf.entity.DexcRequestBody;
 import cn.gov.bjsat.dexc.hsf.entity.DexcResponseBody;
 import cn.gov.bjsat.security.accesskey.AccountUtil;
+import com.alibaba.dubbo.config.ApplicationConfig;
+import com.alibaba.dubbo.config.ReferenceConfig;
+import com.alibaba.dubbo.config.RegistryConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import kafka.message.MessageAndMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.UnsupportedEncodingException;
 
@@ -28,10 +32,11 @@ public class ResultCallbackRunner implements IResultCallback {
 
     ObjectMapper objectMapper;
 
+
     public void run() {
         Logger instanceLogger = LoggerFactory.getLogger("LOG_" + instance.getAppName());
 
-        HSFSpringConsumerBeanFactory hsfFactory = new HSFSpringConsumerBeanFactory();
+      /*  HSFSpringConsumerBeanFactory hsfFactory = new HSFSpringConsumerBeanFactory();
         hsfFactory.setGroup(instance.getCallbackHsfGroupname());
         hsfFactory.setVersion(instance.getCallbackHsfVersino());
         if(instance.getCallbackRoute() != null) {
@@ -39,7 +44,23 @@ public class ResultCallbackRunner implements IResultCallback {
         }else{
             hsfFactory.setTimeout(2000);
         }
-        HsfInterface service = hsfFactory.getService();
+        HsfInterface service = hsfFactory.getService();*/
+
+        ApplicationConfig application = new ApplicationConfig();
+        application.setName("dubbo-node-consumer-2");
+        //application.setRegistry(new RegistryConfig("zookeeper://localhost:2181"));
+        application.setRegistry(new RegistryConfig(Utils.getZookeeperConfig()));
+        ReferenceConfig<HsfInterface> reference = new ReferenceConfig<HsfInterface>();
+
+        reference.setConnections(10);
+        reference.setTimeout(Integer.valueOf(instance.getCallbackRoute()));
+        reference.setApplication(application);
+        reference.setInterface(HsfInterface.class);
+        reference.setGroup(instance.getCallbackHsfGroupname());
+        reference.setVersion(instance.getCallbackHsfVersino());
+
+         HsfInterface service = reference.get();
+
 
         ConsumerIterator<byte[], byte[]> it = stream.iterator();
 
@@ -72,8 +93,8 @@ public class ResultCallbackRunner implements IResultCallback {
                         val.partition(),
                         val.offset(),
                         instance.getAppNameCn(),
-                        hsfFactory.getGroup(),
-                        hsfFactory.getVersion(),
+                        instance.getCallbackHsfGroupname(),
+                        instance.getCallbackHsfVersino(),
                         subMsg(requestBody, 300),
                         instanceCount);
 
@@ -83,7 +104,7 @@ public class ResultCallbackRunner implements IResultCallback {
                 // instanceLogger.debug("异步调用数据回调服务: 结束");
             } catch (Exception e) {
                 //TODO 容错
-                instanceLogger.error("调用HSF失败： group:{}, versin:{},原始数据:{}, err:{}", hsfFactory.getGroup(), hsfFactory.getVersion(), msg, e.getStackTrace() + e.getMessage());
+                instanceLogger.error("调用HSF失败： group:{}, versin:{},原始数据:{}, err:{}", instance.getCallbackHsfGroupname(), instance.getCallbackHsfVersino(), msg, e.getStackTrace() + e.getMessage());
                 e.printStackTrace();
             }
         }

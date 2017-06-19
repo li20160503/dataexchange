@@ -1,10 +1,12 @@
 package cn.gov.bjsat.dexc;
 
+import javax.annotation.Resource;
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
+import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 import java.security.MessageDigest;
@@ -108,6 +110,19 @@ public class Utils {
 
         }
         return host;
+    }
+
+
+    public static String getZookeeperConfig(){
+        String result=null;
+        try {
+            ResourceBundle resourceBundle=ResourceBundle.getBundle("zookeeper");
+            result=resourceBundle.getString("zookeeper");
+        }catch (Exception e){
+            e.printStackTrace();
+
+        }
+        return result;
     }
 
 

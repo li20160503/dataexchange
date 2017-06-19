@@ -86,9 +86,11 @@
 
 
     <!--pandora-dev，EDAS开发模式，启动pandora和注册服务-->
-    <beans profile="pandora-dev">
-        <bean class="cn.gov.bjsat.dexc.PandoraDev" init-method="init" id="pandoraDev"/>
-    </beans>
+    <!--
+        <beans profile="pandora-dev">
+            <bean class="cn.gov.bjsat.dexc.PandoraDev" init-method="init" id="pandoraDev"/>
+        </beans>
+    -->
 
 
 </beans>

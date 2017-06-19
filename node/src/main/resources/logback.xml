@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="30 seconds" >
     <!--日志前缀，路径-->
-    <property name="APP_LOG_PERFIX" value="/home/admin/logs/dexcnode/log"/>
+    <property name="APP_LOG_PERFIX" value="/home/logs/logs_kafka/dexcnode.log"/>
     <jmxConfigurator/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">

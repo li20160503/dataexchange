@@ -12,6 +12,9 @@
         </webroots>
       </configuration>
     </facet>
+    <facet type="Spring" name="Spring">
+      <configuration />
+    </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
@@ -128,5 +131,7 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.curator:curator-test:2.9.0" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.18.1-GA" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.commons:commons-math:2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba:dubbo:2.5.3" level="project" />
+    <orderEntry type="library" name="Maven: org.jboss.netty:netty:3.2.5.Final" level="project" />
   </component>
 </module>
